@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><WEATHER-DASHBOARD></title>
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" />
-     
+    <title>
+        <WEATHER-DASHBOARD>
+    </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" />
+
 </head>
+
 <body>
     <div class="container-fluid text-center text-light bg-dark">
         <h1>Weather-Dashboard</h1>
@@ -15,43 +19,32 @@
     <div class="container">
         <div class="clearfix">
             <div class="row">
-               <div class="col-4 float-left">
-                     <div class="navbar navbar-light bg-light shadow-lg p-3 mb-5 bg-white rounded">
+                <div class="col-4 float-left">
+                    <div class="navbar navbar-light bg-light shadow-lg p-3 mb-5 bg-white rounded">
                         <h3>Search for a City:</h3>
-                            <form class="form-inline">
-                            <input id="city-input" class="form-control mr-sm-2" type="search" placeholder="city" aria-label="Search">
+                        <form class="form-inline" id="searchForm">
+                            <input id="city-input" class="form-control mr-sm-2" type="search" placeholder="city"
+                                aria-label="Search">
                             <button id="select-city" class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
-                            </form>
-                        <form id="searchhistory" class="mt-1">
                         </form>
-                    </div>
-                </div>
-                <div class="col-6 float-right">
-                    <div class="card bg-light text-dark p-2 rem shadow-lg p-3 mb-5 bg-white rounded" style="width: 900; height: 30rem;">
-                        <div id="Temp:"></div>
-                        <div id="Humidty:"></div>
-                        <div id="wind:"></div>
-                        <div id="UV index:"></div>
-    
-                    </div>
-                        <br>
-                        <h2>5-Day Forcast:</h2>
-                    <div  id="5day" class="row">
-        
-                    </div>
-                </div> 
+                        <div id ="search-history" class="mt-1"></div>
 
-            </div> 
+                    </div>
+                        
+                </div>
+
+                <div id="weathercards" class="col-6 float-right"></div>
+
+            </div>
+            <div class = "row" id = "forcast">  
+                <h2>5-Day Forcast:</h2>
+            </div>
         </div>
-            
-    
     </div>
-   
-    <script
-      type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"
-    ></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="js/script.js"></script>
 </body>
+
 </html>
