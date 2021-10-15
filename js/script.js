@@ -6,7 +6,7 @@ var weathercard = document.getElementById("weathercards")
 var forcastdiv = document.getElementById("forcast")
 var searchHistory = []
 var searchHistoryDiv = document.getElementById("search-history")
-
+var cityName = "";
 function fetchcoords(search) {
     console.log(search);
 
@@ -20,10 +20,11 @@ function fetchcoords(search) {
 
             } else {
                 console.log(data[0]);
-                const lat = data[0].lat
-                const lon = data[0].lon
-                weather(lat, lon)
-                addHistory(search)
+                const lat = data[0].lat;
+                const lon = data[0].lon;
+                cityName = data[0].name;
+                weather(lat, lon,);
+                addHistory(search);
             }
 
         })
@@ -62,6 +63,7 @@ function renderWeatherData(response) {
     //  var displayMainDate = citySearchEl.append(" " + mainDate);
     var card = document.createElement("div")
     var cardBody = document.createElement("div")
+    var cityEl = document.createElement("div")
     var tempEl = document.createElement("p")
     var humidityEl = document.createElement("p")
     var wind_speedEl = document.createElement("p")
@@ -73,9 +75,7 @@ function renderWeatherData(response) {
     card.append(cardBody)
 
 
-    // createElement, textContent, append, innerHTMl
-    // target current weather section and render data to page
-    // then loop over the remaining daily forecast, dynamically create html for each day's weather data and render that to the forecast section of your html
+    //loop current weather
     if (currentweather === "Rain") {
 
         var currentIcon = document.createElement('img')
@@ -98,20 +98,19 @@ function renderWeatherData(response) {
         currentIcon.setAttribute("src", "http://openweathermap.org/img/w/13d.png");
         currentIcon.setAttribute("style", "height: 60px; width: 60px");
     }
-    // console.log(tempEl)
+    cityEl.textContent = `${cityName}`;
     tempEl.textContent = `Temp: ${tempF}°F`;
     wind_speedEl.textContent = `wind_speed: ${wind_speedMph}°Mph`;
     humidityEl.textContent = `humidity: ${humidity}°%`;
     uviEl.textContent = `uv_index: ${uvi}°`;
     pressureEl.textContent = `Pressure: ${pressure}°`;
 
-    cardBody.append(tempEl, wind_speedEl, humidityEl, uviEl, pressureEl, currentIcon)
+    cardBody.append(cityEl,tempEl, wind_speedEl, humidityEl, uviEl, pressureEl, currentIcon)
     weathercard.innerHTML = ""
     weathercard.append(card)
-
 }
 
-var display5Day = function (weather,) {
+    var display5Day = function (weather,) {
     var timeDate = weather.dt
     var currentTime = moment.unix(timeDate).format("MM/DD/YYYY");
     var currentIcon = `https://openweathermap.org/img/w/${weather.weather[0].icon}.png`;
@@ -136,7 +135,7 @@ var display5Day = function (weather,) {
     cardBody.append(forcast, weatherIcon, TempP,wind_speedM,humidityH,uviU, weather_description)
     col.setAttribute("class", "col-md")
     card.setAttribute("class", "card")
-    cardBody.setAttribute("class", "card-body p-2")
+    cardBody.setAttribute("class", "card-body p-2 bg-primary")
     forcast.setAttribute("class", "card-title")
     weatherIcon.setAttribute("src", currentIcon)
     TempP.setAttribute("class", "card-text")
@@ -144,17 +143,12 @@ var display5Day = function (weather,) {
     humidityH.setAttribute("class", "card-text")
     uviU.setAttribute("class", "card-text")
     weather_description.setAttribute("class", "card-text")
-    //var forecast = weather.classlist;
-    //for(var i=5; i < forecast.length; i=i+8){
-    //var dailyForecast = forecast[i];
     forcast.textContent = currentTime
     TempP.textContent = "Temp "+ Temp + "°F"
     wind_speedM.textContent = wind_speed + "°Mph"
     humidityH.textContent = humidity + "°%"
     uviU.textContent = uvi + "°"
     weather_description.textContent = weatherDescription
-
-
     forcastdiv.append(col)
 };
 
@@ -175,10 +169,10 @@ function rendersearchHistory() {
     for (var i = searchHistory.length - 1; i >= 0; i--) {
         var button = document.createElement("button");
         button.setAttribute("class", "historybutton")
-        //button.classList.add("historybutton")
         button.setAttribute("data-history", searchHistory[i])
         button.textContent = searchHistory[i]
         searchHistoryDiv.append(button)
+        button.classList.add("btn-secondary")
     }
 
 }
@@ -200,6 +194,7 @@ function pageLoad() {
 
     rendersearchHistory()
 }
+
 function handlesearchbutton(e){
 if (!e.target.matches(".historybutton")){return}
 var button = e.target
@@ -214,9 +209,6 @@ function handlesearchsubmit(e) {
     console.log(search);
     fetchcoords(search)
 }
-//Event deligation...
-//$("#select-city").on("click", handlesearchsubmit)
 UserCitySearch.addEventListener('submit', handlesearchsubmit);
 document.addEventListener("click",handlesearchbutton);
-//searchHistoryDiv.addEventListener("click",handlesearchbutton)
 pageLoad()
